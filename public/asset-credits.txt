@@ -1,0 +1,13 @@
+The horizontal Vedanova logo was supplied by the client.
+
+Inner pages (about) still use illustrative photography in CSS background images, licensed by Unsplash:
+Hazel J: https://unsplash.com/photos/vast-industrial-complex-with-pipes-tanks-and-buildings-9KeG7W4cI5U
+Haberdoedas: https://unsplash.com/photos/industrial-machinery-with-pipes-and-tanks-indoors-iENM_LrJv9s
+Haberdoedas: https://unsplash.com/photos/industrial-pipes-and-machinery-inside-a-facility-TWlmgguC8HI
+
+Home page photography lives in public/images/photos (hero, hero-mobile, solvents, recovered, petrochemicals,
+drums, pipes, aerial, tank, lab, beaker). Each file is a raw photograph graded into the shared navy duotone by
+scripts/grade-photos.cjs. The project holds no record of the source photographer or licence for these raw files.
+TODO before launch: confirm the source and licence of each file and list the credits here, or replace the set with
+the client's own photography (re-run the script on the new raw files to keep the same grade).
+All Home photography is illustrative and is captioned as such on the page.

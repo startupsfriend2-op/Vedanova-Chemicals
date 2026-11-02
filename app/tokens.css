@@ -1,0 +1,40 @@
+/* Design tokens: "Precision Industrial". Additive: the legacy variables in globals.css stay for the inner pages. */
+:root{
+  --c-navy:#0a1030;--c-navy-2:#121846;--c-navy-deep:#070b24;--c-on-navy:#ffffff;--c-on-navy-muted:#b3bbd4;
+  --c-paper:#f4f2ed;--c-white:#fff;--c-ink:#141a38;--c-muted:#5a6178;
+  --c-line:#dcdde5;--c-line-paper:#d8d5cb;--c-line-navy:rgba(255,255,255,.16);
+  --accent:#e94826;--accent-btn:#d23b1b;--accent-btn-hover:#b92f12;--accent-ink:#c4341a;--accent-light:#ff8a63;
+  --r:4px;
+  --shadow:0 1px 2px rgba(10,16,48,.06),0 10px 28px rgba(10,16,48,.08);
+  --ease:cubic-bezier(.22,1,.36,1);
+  --topbar-h:36px;--bar-h:76px;
+  /* fluid type scale */
+  --fs-display:clamp(2.5rem,1.55rem + 3.9vw,4.5rem);
+  --fs-h1:clamp(2.25rem,1.6rem + 2.8vw,3.5rem);
+  --fs-h2:clamp(1.75rem,1.2rem + 2.2vw,3rem);
+  --fs-h3:clamp(1.25rem,1.1rem + .6vw,1.625rem);
+  --fs-lead:clamp(1.0625rem,1rem + .3vw,1.25rem);
+  --fs-body:1rem;--fs-small:.875rem;--fs-label:.75rem;
+  --section-y:clamp(3.5rem,2rem + 6vw,9rem);
+}
+@media(max-width:760px){:root{--topbar-h:44px;--bar-h:64px}}
+
+/* Focus: visible on everything interactive */
+:where(a,button,input,select,textarea,summary,[tabindex]):focus-visible{outline:2px solid var(--accent-ink);outline-offset:3px;border-radius:2px}
+.on-dark :where(a,button,input,select,textarea):focus-visible,.on-dark:where(a,button):focus-visible{outline-color:#fff}
+.skip-link{position:fixed;left:16px;top:-80px;z-index:100;background:var(--c-navy);color:#fff;padding:12px 18px;border-radius:var(--r);font-weight:700;font-size:14px;transition:top .2s}
+.skip-link:focus{top:12px;outline:2px solid #fff;outline-offset:2px}
+
+/* Buttons: AA-safe accent fill, arrow nudge */
+.btn-accent{background:var(--accent-btn);color:#fff}
+.btn-accent:hover{background:var(--accent-btn-hover)}
+.btn .arrow{transition:transform .3s var(--ease)}
+.btn:hover .arrow{transform:translate(3px,-3px)}
+.btn .arrow-r{transition:transform .3s var(--ease)}
+.btn:hover .arrow-r{transform:translateX(4px)}
+
+/* Reduced motion: final state at once, never blank */
+@media (prefers-reduced-motion:reduce){
+  [data-reveal]{opacity:1!important;transform:none!important;clip-path:none!important}
+  html{scroll-behavior:auto}
+}
