@@ -61,12 +61,7 @@ export default function ProductsPage() {
         </div>
       </section>
 
-      <EnquiryBand
-        title="Let’s Discuss Your Chemical Requirements."
-        text="Connect with Vedanova Chemicals to discuss industrial solvent, recovered solvent and petrochemical requirements."
-        buttonLabel="Request a Quote"
-        href="/contact"
-      />
+      <EnquiryBand />
     </MotionProvider>
   );
 }
