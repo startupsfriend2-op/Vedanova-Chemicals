@@ -1,3 +1,11 @@
+import type { Metadata } from 'next';
+export const metadata: Metadata = {
+  title: { absolute: 'Vedanova Chemicals: Solvent & Petrochemical Trading' },
+  description: 'Vedanova Chemicals, Vadodara, Gujarat: trading and sourcing of industrial solvents, recovered solvents and petrochemicals. Send your enquiry today.',
+  alternates: { canonical: '/' },
+  openGraph: { title: 'Vedanova Chemicals: Solvent & Petrochemical Trading', description: 'Vedanova Chemicals, Vadodara, Gujarat: trading and sourcing of industrial solvents, recovered solvents and petrochemicals. Send your enquiry today.', url: '/', type: 'website', siteName: 'Vedanova Chemicals', locale: 'en_IN' },
+  twitter: { card: 'summary', title: 'Vedanova Chemicals: Solvent & Petrochemical Trading', description: 'Vedanova Chemicals, Vadodara, Gujarat: trading and sourcing of industrial solvents, recovered solvents and petrochemicals. Send your enquiry today.' },
+};
 import { MotionProvider, SmoothScroll } from '@/components/motion';
 import Hero from '@/components/home/Hero';
 import WorkStrip from '@/components/home/WorkStrip';

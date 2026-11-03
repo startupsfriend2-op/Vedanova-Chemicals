@@ -10,9 +10,11 @@ import { TechnicalNote } from '@/components/industries/RequirementProcess';
 import './industries.css';
 
 export const metadata: Metadata = {
-  title: 'Industrial Applications',
+  title: { absolute: 'Solvent & Petrochemical Applications | Vedanova Chemicals' },
+  description: 'Industrial application areas for solvents and petrochemicals: paints and coatings, printing and inks, adhesives, cleaning and chemical processing.',
   alternates: { canonical: '/industries' },
-  description: 'Explore industrial applications relevant to solvent and petrochemical requirements, including coatings, inks and chemical processing.',
+  openGraph: { title: 'Solvent & Petrochemical Applications | Vedanova Chemicals', description: 'Industrial application areas for solvents and petrochemicals: paints and coatings, printing and inks, adhesives, cleaning and chemical processing.', url: '/industries', type: 'website', siteName: 'Vedanova Chemicals', locale: 'en_IN' },
+  twitter: { card: 'summary', title: 'Solvent & Petrochemical Applications | Vedanova Chemicals', description: 'Industrial application areas for solvents and petrochemicals: paints and coatings, printing and inks, adhesives, cleaning and chemical processing.' },
 };
 
 export default function IndustriesPage() {

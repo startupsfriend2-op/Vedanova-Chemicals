@@ -67,9 +67,9 @@ export default function Header() {
         <button ref={toggleRef} type="button" className="menu-button" aria-label="Open menu" aria-haspopup="dialog" aria-expanded={open} aria-controls="mobile-navigation" onClick={() => setOpenedOn(pathname)}><Menu size={26} aria-hidden="true" /></button>
       </div>
     </div>
-    <div ref={sheetRef} id="mobile-navigation" className="sheet on-dark" role="dialog" aria-modal="true" aria-label="Site navigation" data-lenis-prevent data-open={open} inert={!open} onKeyDown={onSheetKey}>
+    <div ref={sheetRef} id="mobile-navigation" className="sheet" role="dialog" aria-modal="true" aria-label="Site navigation" data-lenis-prevent data-open={open} inert={!open} onKeyDown={onSheetKey}>
       <div className="container sheet-top">
-        <Link href="/" className="brand brand-plate" aria-label="Vedanova Chemicals – Home"><Image src="/images/vedanova-logo.png" alt="" width={212} height={50} /></Link>
+        <Link href="/" className="brand" aria-label="Vedanova Chemicals – Home"><Image src="/images/vedanova-logo.png" alt="" width={212} height={50} /></Link>
         <button ref={closeRef} type="button" className="menu-button" aria-label="Close menu" onClick={close}><X size={26} aria-hidden="true" /></button>
       </div>
       <nav className="container sheet-nav" aria-label="Mobile navigation">

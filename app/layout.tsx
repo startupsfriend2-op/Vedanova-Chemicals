@@ -15,10 +15,12 @@ export const metadata: Metadata = {
   description: 'Vedanova Chemicals Private Limited, Vadodara — enquiries for industrial solvents, recovered solvents and petrochemical trading and sourcing.',
   robots: { index: true, follow: true },
   alternates: { canonical: '/' },
-  openGraph: { title: 'Vedanova Chemicals', description: 'Industrial solvent and petrochemical trading and sourcing in Vadodara, Gujarat.', type: 'website', siteName: company.brand },
+  openGraph: { title: 'Vedanova Chemicals', description: 'Industrial solvent and petrochemical trading and sourcing in Vadodara, Gujarat.', type: 'website', siteName: company.brand, locale: 'en_IN' },
 };
 export const viewport: Viewport = { width: 'device-width', initialScale: 1, themeColor: '#0a1030' };
 // Organization details from the supplied company information only.
+const websiteData = { '@context': 'https://schema.org', '@type': 'WebSite', name: company.brand, url: domain };
+
 const organizationData = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
@@ -32,7 +34,7 @@ const organizationData = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return <html lang="en" className={`${manrope.variable} ${dmSans.variable}`} data-scroll-behavior="smooth">
-    <head><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationData).replace(/</g, '<') }} /><noscript><style>{'[data-reveal]{opacity:1!important;transform:none!important;clip-path:none!important}'}</style></noscript></head>
+    <head><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify([organizationData, websiteData]).replace(/</g, '\\u003c') }} /><noscript><style>{'[data-reveal]{opacity:1!important;transform:none!important;clip-path:none!important}'}</style></noscript></head>
     <body><a className="skip-link" href="#main-content">Skip to content</a><Header/><main id="main-content">{children}</main><Footer/></body>
   </html>;
 }

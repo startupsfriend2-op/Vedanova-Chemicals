@@ -9,9 +9,11 @@ import { photo } from '@/lib/photos';
 import './about.css';
 
 export const metadata: Metadata = {
-  title: 'About Us',
+  title: { absolute: 'About Vedanova Chemicals | Industrial Chemical Trading' },
+  description: 'Learn about Vedanova Chemicals Private Limited, a Vadodara, Gujarat company trading and sourcing industrial solvents, recovered solvents and petrochemicals.',
   alternates: { canonical: '/about' },
-  description: 'Learn about Vedanova Chemicals Private Limited, a Vadodara-based trading and sourcing company focused on industrial solvents, recovered solvents and petrochemical products.',
+  openGraph: { title: 'About Vedanova Chemicals | Industrial Chemical Trading', description: 'Learn about Vedanova Chemicals Private Limited, a Vadodara, Gujarat company trading and sourcing industrial solvents, recovered solvents and petrochemicals.', url: '/about', type: 'website', siteName: 'Vedanova Chemicals', locale: 'en_IN' },
+  twitter: { card: 'summary', title: 'About Vedanova Chemicals | Industrial Chemical Trading', description: 'Learn about Vedanova Chemicals Private Limited, a Vadodara, Gujarat company trading and sourcing industrial solvents, recovered solvents and petrochemicals.' },
 };
 
 const steps = [

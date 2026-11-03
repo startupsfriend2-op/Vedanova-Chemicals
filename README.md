@@ -39,19 +39,24 @@ Home photography is graded with `node scripts/grade-photos.cjs <rawDir>` (writes
 
 ## Make the enquiry form deliver messages
 
-1. Sign up at https://resend.com and **verify a domain you control** for sending email.
-2. Create a Resend API key.
-3. Create `.env.local` from `.env.example` and enter:
+Enquiries are sent with the official Resend SDK from `app/api/contact/route.ts`. The recipient is read only from `CONTACT_EMAIL` on the server, never from the form.
+
+1. Sign up at https://resend.com and create an API key.
+2. For testing, `RESEND_FROM_EMAIL` can be `Vedanova Chemicals <onboarding@resend.dev>`. For production, **verify a domain you control** and use an address on it.
+3. Create `.env.local` from `.env.example` (never commit it):
 
 ```env
 RESEND_API_KEY=re_...your_real_key...
-CONTACT_FROM_EMAIL="Vedanova Website <enquiries@your-verified-domain.com>"
-CONTACT_TO_EMAIL=vedanovachemicals@gmail.com
-NEXT_PUBLIC_SITE_URL=https://your-real-domain.com
+CONTACT_EMAIL=startupsfriend2@gmail.com
+RESEND_FROM_EMAIL=Vedanova Chemicals <onboarding@resend.dev>
 ```
 
-4. Restart `npm run dev` after editing environment variables.
-5. Submit a real test enquiry from `/contact`, verify delivery to the recipient inbox, and also test missing/invalid form data.
+4. Recommended on Vercel: add Upstash Redis (`UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`) so the rate limit is shared across instances. Without it, the limit only applies within one instance.
+5. Restart `npm run dev` after editing environment variables.
+
+**Switching to the official recipient:** change `CONTACT_EMAIL` in Vercel (Project Settings, Environment Variables) to the official address, then redeploy. No code change is needed.
+
+A success message means Resend accepted the email. It does not confirm inbox delivery, so check the recipient inbox after each change.
 
 **Important:** The enquiry form is complete and sends via the Resend REST API when configured, but **cannot deliver emails until a genuine API key and verified sender identity are supplied**. It returns an accurate error rather than showing a false success. Do not commit `.env.local` to Git or put an API key in browser code.
 

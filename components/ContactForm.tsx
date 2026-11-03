@@ -15,10 +15,10 @@ export default function ContactForm() {
    try {
      const response = await fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(Object.fromEntries(fields.entries())) });
      const json = await response.json().catch(()=>({error:'Unexpected server response.'}));
-     if(!response.ok) throw new Error(json.error || 'We could not submit your enquiry. Please try again.');
-     setStatus({type:'success',message:'Thank you. Your enquiry has been sent to Vedanova Chemicals.'});
+     if(!response.ok) throw new Error(typeof json.error === 'string' && response.status < 500 ? json.error : 'Unable to submit your enquiry right now. Please try again.');
+     setStatus({type:'success',message:'Thank you! Your enquiry has been submitted successfully. Our team will contact you shortly.'});
      form.reset(); setProduct('');
-   } catch (err) { setStatus({type:'error',message: err instanceof Error ? err.message : 'Unable to submit your enquiry right now.'}); }
+   } catch (err) { setStatus({type:'error',message: err instanceof Error && err.message !== 'Failed to fetch' ? err.message : 'Unable to submit your enquiry right now. Please try again.'}); }
    finally { setLoading(false); }
  }
  return <form className="c-form" onSubmit={handleSubmit} id="enquiry" noValidate={false}>

@@ -1,45 +1,86 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { Resend } from 'resend';
+import { validateEnquiry } from '@/lib/contact/validate';
+import { enquirySubject, enquiryHtml, enquiryText, formatIst } from '@/lib/contact/email';
+import { checkSubmission, releaseSubmission } from '@/lib/contact/ratelimit';
+
 export const runtime = 'nodejs';
 
-function text(input: unknown, maxLength: number): string {
-  return typeof input === 'string' ? input.trim().slice(0, maxLength + 1) : '';
+const MAX_BODY_BYTES = 15000;
+const TOO_LONG = 'Your enquiry is too long. Please shorten it and try again.';
+const GENERIC_FAILURE = 'Unable to submit your enquiry right now. Please try again.';
+
+/** Client address from the proxy header. Only the first hop is used. */
+function clientIp(request: NextRequest): string {
+  const forwarded = request.headers.get('x-forwarded-for') ?? '';
+  return forwarded.split(',')[0].trim().slice(0, 64) || 'unknown';
 }
-const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const safe = (input: string) => input.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#39;');
-const allowedProducts = new Set(['Industrial Solvents','Recovered Solvents','Petrochemicals','Other Chemical Requirement']);
 
 export async function POST(request: NextRequest) {
-  if (Number(request.headers.get('content-length') || 0) > 15000) {
-    return NextResponse.json({error:'Enquiry is too long.'},{status:413});
+  if (Number(request.headers.get('content-length') || 0) > MAX_BODY_BYTES) {
+    return NextResponse.json({ error: TOO_LONG }, { status: 413 });
   }
-  let data: Record<string,unknown>;
-  try { const body = await request.json(); if (!body || typeof body !== 'object' || Array.isArray(body)) throw Error(); data = body; }
-  catch { return NextResponse.json({error:'Invalid form submission.'},{status:400}); }
 
-  // Honeypot: don't disclose spam rules to automated submitters.
-  if (text(data.website,200)) return NextResponse.json({success:true});
-  const name=text(data.name,120), company=text(data.company,150), email=text(data.email,254);
-  const phone=text(data.phone,25), product=text(data.product,100), quantity=text(data.quantity,100), message=text(data.message,4000);
-  if (name.length<2 || name.length>120 || !validEmail.test(email) || email.length>254 || phone.length<7 || phone.length>25 || !/^[+\d\s()\-]+$/.test(phone) || !allowedProducts.has(product) || message.length<10 || message.length>4000 || company.length>150 || quantity.length>100) {
-    return NextResponse.json({error:'Please enter a valid name, email, phone, product category and requirement details.'},{status:400});
-  }
-  const { RESEND_API_KEY, CONTACT_FROM_EMAIL, CONTACT_TO_EMAIL } = process.env;
-  if (!RESEND_API_KEY || !CONTACT_FROM_EMAIL || !CONTACT_TO_EMAIL || RESEND_API_KEY==='re_replace_me') {
-    console.error('Contact endpoint is missing Resend email configuration.');
-    return NextResponse.json({error:'Online enquiries are not configured yet. Please contact us by phone or email.'},{status:503});
-  }
-  const plain = `New enquiry from Vedanova Chemicals website\n\nName: ${name}\nCompany: ${company||'-'}\nEmail: ${email}\nPhone: ${phone}\nCategory: ${product}\nQuantity: ${quantity||'-'}\n\nRequirement:\n${message}`;
-  const html = `<div style="font-family:Arial,sans-serif;color:#1d2552;max-width:650px;margin:auto"><h2>New Vedanova Website Enquiry</h2><table cellpadding="7" style="border-collapse:collapse;width:100%">${[['Name',name],['Company',company],['Email',email],['Phone',phone],['Category',product],['Quantity',quantity]].map(([k,v])=>`<tr><td style="border-bottom:1px solid #eee;font-weight:bold">${safe(k)}</td><td style="border-bottom:1px solid #eee">${safe(v||'-')}</td></tr>`).join('')}</table><h3>Requirement</h3><p style="white-space:pre-wrap">${safe(message)}</p></div>`;
+  let data: Record<string, unknown>;
   try {
-    const res = await fetch('https://api.resend.com/emails', {
-      method:'POST', headers: {Authorization: `Bearer ${RESEND_API_KEY}`, 'Content-Type':'application/json'},
-      body:JSON.stringify({from:CONTACT_FROM_EMAIL,to:[CONTACT_TO_EMAIL],reply_to:email,subject:`Vedanova Website Enquiry — ${product}`,text:plain,html}),
-      cache:'no-store',signal:AbortSignal.timeout(12000)
+    const raw = await request.text();
+    if (raw.length > MAX_BODY_BYTES) return NextResponse.json({ error: TOO_LONG }, { status: 413 });
+    const body = JSON.parse(raw);
+    if (!body || typeof body !== 'object' || Array.isArray(body)) throw new Error('not an object');
+    data = body;
+  } catch {
+    return NextResponse.json({ error: 'Invalid form submission.' }, { status: 400 });
+  }
+
+  // Honeypot: real visitors never fill this hidden field. Report success so bots learn nothing.
+  if (typeof data.website === 'string' && data.website.trim()) return NextResponse.json({ success: true });
+
+  const result = validateEnquiry(data);
+  if (!result.ok) return NextResponse.json({ error: result.message, field: result.field }, { status: 400 });
+  const { enquiry } = result;
+
+  // Fingerprint of the enquiry content, used to stop repeated or double submissions.
+  // Configuration comes only from the environment. The recipient is never read from the request.
+  const apiKey = process.env.RESEND_API_KEY;
+  const recipient = process.env.CONTACT_EMAIL || process.env.CONTACT_TO_EMAIL;
+  const sender = process.env.RESEND_FROM_EMAIL || process.env.CONTACT_FROM_EMAIL;
+  if (!apiKey || apiKey === 're_replace_me' || !recipient || !sender) {
+    console.error('Contact endpoint is missing email configuration (RESEND_API_KEY, CONTACT_EMAIL, RESEND_FROM_EMAIL).');
+    return NextResponse.json({ error: 'Online enquiries are not available right now. Please contact us by phone or email.' }, { status: 503 });
+  }
+
+  // Fingerprint of the enquiry content, used to stop repeated or double submissions.
+  const fingerprint = Buffer.from(`${enquiry.email}|${enquiry.product}|${enquiry.message}`.toLowerCase()).toString('base64url').slice(0, 96);
+  const verdict = await checkSubmission(clientIp(request), fingerprint);
+  if (verdict === 'limited') {
+    return NextResponse.json({ error: 'Too many enquiries were sent from your connection. Please wait a few minutes, or contact us by phone or email.' }, { status: 429 });
+  }
+  if (verdict === 'duplicate') {
+    return NextResponse.json({ error: 'This enquiry was already received a moment ago. Please do not send it again.' }, { status: 409 });
+  }
+
+  const submittedAt = formatIst(new Date());
+  try {
+    const resend = new Resend(apiKey);
+    const { error } = await resend.emails.send({
+      from: sender,
+      to: [recipient],
+      replyTo: enquiry.email,
+      subject: enquirySubject(enquiry.name),
+      html: enquiryHtml(enquiry, submittedAt),
+      text: enquiryText(enquiry, submittedAt),
     });
-    if (!res.ok) { console.error('Resend mail delivery error',res.status,(await res.text()).slice(0,400)); return NextResponse.json({error:'We could not deliver your enquiry. Please contact us directly by email or phone.'},{status:502}); }
-    return NextResponse.json({success:true});
+    if (error) {
+      // Log the provider error name only. Never log the key, the payload or the raw response.
+      console.error('Resend rejected the enquiry email', error.name);
+      await releaseSubmission(fingerprint);
+      return NextResponse.json({ error: GENERIC_FAILURE }, { status: 502 });
+    }
+    // Resend accepted the email for delivery. This does not prove the inbox received it.
+    return NextResponse.json({ success: true });
   } catch (err) {
-    console.error('Email API unavailable',err);
-    return NextResponse.json({error:'Enquiry service is temporarily unavailable. Please use email or phone.'},{status:502});
+    console.error('Email service call failed', err instanceof Error ? err.name : 'unknown');
+    await releaseSubmission(fingerprint);
+    return NextResponse.json({ error: GENERIC_FAILURE }, { status: 502 });
   }
 }

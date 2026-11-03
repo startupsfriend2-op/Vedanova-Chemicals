@@ -9,9 +9,11 @@ import Rule from '@/components/products/Rule';
 import './products.css';
 
 export const metadata: Metadata = {
-  title: 'Products & Solutions',
+  title: { absolute: 'Industrial Solvents & Petrochemicals | Vedanova Chemicals' },
+  description: 'Enquire about industrial solvents, recovered solvents and petrochemical products from Vedanova Chemicals, Vadodara. Share your grade and quantity.',
   alternates: { canonical: '/products' },
-  description: 'Explore solvent trading, recovered solvent sourcing and petrochemical requirements with Vedanova Chemicals.',
+  openGraph: { title: 'Industrial Solvents & Petrochemicals | Vedanova Chemicals', description: 'Enquire about industrial solvents, recovered solvents and petrochemical products from Vedanova Chemicals, Vadodara. Share your grade and quantity.', url: '/products', type: 'website', siteName: 'Vedanova Chemicals', locale: 'en_IN' },
+  twitter: { card: 'summary', title: 'Industrial Solvents & Petrochemicals | Vedanova Chemicals', description: 'Enquire about industrial solvents, recovered solvents and petrochemical products from Vedanova Chemicals, Vadodara. Share your grade and quantity.' },
 };
 
 export default function ProductsPage() {

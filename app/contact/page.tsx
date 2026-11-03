@@ -6,9 +6,11 @@ import { company } from '@/lib/site';
 import './contact.css';
 
 export const metadata: Metadata = {
-  title: 'Contact Us & Request a Quote',
+  title: { absolute: 'Contact Vedanova Chemicals | Request an Industrial Quote' },
+  description: 'Contact Vedanova Chemicals in Vadodara, Gujarat by phone, email or enquiry form for industrial solvent and petrochemical requirements.',
   alternates: { canonical: '/contact' },
-  description: 'Contact Vedanova Chemicals in Vadodara to discuss industrial solvent, recovered solvent and petrochemical sourcing requirements.',
+  openGraph: { title: 'Contact Vedanova Chemicals | Request an Industrial Quote', description: 'Contact Vedanova Chemicals in Vadodara, Gujarat by phone, email or enquiry form for industrial solvent and petrochemical requirements.', url: '/contact', type: 'website', siteName: 'Vedanova Chemicals', locale: 'en_IN' },
+  twitter: { card: 'summary', title: 'Contact Vedanova Chemicals | Request an Industrial Quote', description: 'Contact Vedanova Chemicals in Vadodara, Gujarat by phone, email or enquiry form for industrial solvent and petrochemical requirements.' },
 };
 
 // Business hours are not confirmed yet. Set this to the verified hours (for example "Mon – Sat : 9:30 AM – 6:30 PM")
