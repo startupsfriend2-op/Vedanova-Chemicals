@@ -65,7 +65,7 @@ function ShowcaseRow({ category: c }: { category: Category }) {
             <li><ClipboardList size={16} aria-hidden="true" />{categoryMeta[1]}</li>
           </Reveal>
           <Reveal>
-            <Link href={`/contact?product=${encodeURIComponent(c.title)}#enquiry`} className="btn btn-dark p-enquire">
+            <Link href={`/contact?product=${encodeURIComponent(c.title)}#enquiry`} className="btn btn-accent p-enquire">
               Enquire About {c.title} <ArrowUpRight className="arrow" size={18} aria-hidden="true" />
             </Link>
           </Reveal>

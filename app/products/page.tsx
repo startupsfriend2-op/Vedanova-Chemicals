@@ -1,6 +1,4 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
 import { MaskedHeading, MotionProvider, Reveal, RevealGroup } from '@/components/motion';
 import EnquiryBand from '@/components/home/EnquiryBand';
 import ProductHero from '@/components/products/ProductHero';
@@ -35,7 +33,7 @@ export default function ProductsPage() {
         </div>
       </section>
 
-      <div className="p-showcase-wrap">
+      <div className="p-showcase-wrap on-dark">
         <div className="p-nav-bar">
           <div className="container">
             <ProductNav sticky />
@@ -47,19 +45,6 @@ export default function ProductsPage() {
       </div>
 
       <ProductRequirementSteps />
-
-      <section className="p-section p-special" aria-labelledby="special-title">
-        <div className="container">
-          <RevealGroup className="p-special-copy">
-            <Reveal><p className="label"><i className="label-rule" />Special requirements</p></Reveal>
-            <Reveal as="h2"><span id="special-title" className="p-h2">Looking for Something Specific?</span></Reveal>
-            <Reveal as="p" className="p-body">Tell us the chemical name, required specification, quantity and delivery destination so we can review your enquiry.</Reveal>
-            <Reveal>
-              <Link href="/contact#enquiry" className="btn btn-dark p-lift">Send Your Requirement <ArrowRight className="arrow" size={18} aria-hidden="true" /></Link>
-            </Reveal>
-          </RevealGroup>
-        </div>
-      </section>
 
       <EnquiryBand />
     </MotionProvider>
