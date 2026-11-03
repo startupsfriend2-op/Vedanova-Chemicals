@@ -21,15 +21,53 @@ export default function ContactForm() {
    } catch (err) { setStatus({type:'error',message: err instanceof Error ? err.message : 'Unable to submit your enquiry right now.'}); }
    finally { setLoading(false); }
  }
- return <form className="contact-form" onSubmit={handleSubmit} id="enquiry" noValidate={false}>
-   <div className="form-intro"><span className="eyebrow"><span className="eyebrow-line"/>SEND AN ENQUIRY</span><h2>Tell us what you need.</h2><p>Complete the details below and our team can follow up with you.</p></div>
-   <div className="form-row"><label>Full name <span>*</span><input name="name" type="text" minLength={2} maxLength={120} autoComplete="name" placeholder="Your full name" required/></label><label>Company name<input name="company" type="text" maxLength={150} autoComplete="organization" placeholder="Your company (optional)"/></label></div>
-   <div className="form-row"><label>Email address <span>*</span><input name="email" type="email" maxLength={254} autoComplete="email" placeholder="name@company.com" required/></label><label>Phone number <span>*</span><input name="phone" type="tel" maxLength={25} autoComplete="tel" placeholder="+91 XXXXX XXXXX" required/></label></div>
-   <div className="form-row"><label>Product category <span>*</span><select name="product" value={product} onChange={e=>setProduct(e.target.value)} required><option value="" disabled>Select a category</option><option>Industrial Solvents</option><option>Recovered Solvents</option><option>Petrochemicals</option><option>Other Chemical Requirement</option></select></label><label>Required quantity<input name="quantity" type="text" maxLength={100} placeholder="e.g. 5 MT, 20 drums (optional)"/></label></div>
-   <label>Requirement details <span>*</span><textarea name="message" rows={5} minLength={10} maxLength={4000} required placeholder="Chemical name, grade/specification, delivery location and any other details..."/></label>
+ return <form className="c-form" onSubmit={handleSubmit} id="enquiry" noValidate={false}>
+   <div className="c-form-intro">
+     <p className="c-label"><span className="c-label-rule" aria-hidden="true" />Product enquiry</p>
+     <h2 className="c-form-title">Tell us what you need.</h2>
+     <p className="c-form-lead">Share your chemical requirements and contact information for a sourcing discussion.</p>
+   </div>
+   <div className="c-grid">
+     <label className="c-field">
+       <span className="c-field-label">Full name <span className="c-req" aria-hidden="true">*</span></span>
+       <input className="c-input" name="name" type="text" minLength={2} maxLength={120} autoComplete="name" placeholder="Your full name" required/>
+     </label>
+     <label className="c-field">
+       <span className="c-field-label">Company name <span className="c-opt">(optional)</span></span>
+       <input className="c-input" name="company" type="text" maxLength={150} autoComplete="organization" placeholder="Your company"/>
+     </label>
+     <label className="c-field">
+       <span className="c-field-label">Email address <span className="c-req" aria-hidden="true">*</span></span>
+       <input className="c-input" name="email" type="email" maxLength={254} autoComplete="email" placeholder="name@company.com" required/>
+     </label>
+     <label className="c-field">
+       <span className="c-field-label">Phone number <span className="c-req" aria-hidden="true">*</span></span>
+       <input className="c-input" name="phone" type="tel" maxLength={25} autoComplete="tel" placeholder="+91 XXXXX XXXXX" required/>
+     </label>
+     <label className="c-field">
+       <span className="c-field-label">Product category <span className="c-req" aria-hidden="true">*</span></span>
+       <select className="c-input c-select" name="product" value={product} onChange={e=>setProduct(e.target.value)} required>
+         <option value="" disabled>Select a category</option>
+         <option>Industrial Solvents</option>
+         <option>Recovered Solvents</option>
+         <option>Petrochemicals</option>
+         <option>Other Chemical Requirement</option>
+       </select>
+     </label>
+     <label className="c-field">
+       <span className="c-field-label">Required quantity <span className="c-opt">(optional)</span></span>
+       <input className="c-input" name="quantity" type="text" maxLength={100} placeholder="e.g. 5 MT, 20 drums"/>
+     </label>
+     <label className="c-field c-field-wide">
+       <span className="c-field-label">Requirement details <span className="c-req" aria-hidden="true">*</span></span>
+       <textarea className="c-input c-textarea" name="message" rows={5} minLength={10} maxLength={4000} required placeholder="Chemical name, grade or specification, delivery location and any other details."/>
+     </label>
+   </div>
    <div className="honeypot" aria-hidden="true"><label>Leave this field empty<input name="website" type="text" tabIndex={-1} autoComplete="off"/></label></div>
-   <p className="form-privacy">By submitting, you agree to be contacted about your enquiry. See our <a href="/privacy">Privacy Policy</a>.</p>
-   {status && <div className={`form-alert ${status.type}`} role="status" aria-live="polite">{status.type==='success'?<CheckCircle2 size={19}/>:<AlertCircle size={19}/>} {status.message}</div>}
-   <button type="submit" className="btn btn-primary form-submit" disabled={loading}>{loading ? <>Sending Enquiry <LoaderCircle className="spinner" size={18}/></> : <>Send Enquiry <ArrowUpRight size={18}/></>}</button>
+   <p className="c-privacy">By submitting, you agree to be contacted about your enquiry. See our <a href="/privacy">Privacy Policy</a>.</p>
+   {status && <div className={`c-alert c-alert-${status.type}`} role="status" aria-live="polite">{status.type==='success'?<CheckCircle2 size={19} aria-hidden="true"/>:<AlertCircle size={19} aria-hidden="true"/>} <span>{status.message}</span></div>}
+   <button type="submit" className="btn btn-accent c-submit" disabled={loading} aria-busy={loading}>
+     {loading ? <>Sending enquiry <LoaderCircle className="spinner" size={18} aria-hidden="true"/></> : <>Send Enquiry <ArrowUpRight className="arrow" size={18} aria-hidden="true"/></>}
+   </button>
  </form>;
 }
