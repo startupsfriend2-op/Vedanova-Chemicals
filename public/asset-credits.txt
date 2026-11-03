@@ -13,3 +13,5 @@ the client's own photography (re-run the script on the new raw files to keep the
 All Home photography is illustrative and is captioned as such on the page.
 
 Who we are photo (about page): "Industrial refinery with storage tanks and metal pipes under a warm golden sky" by @mirrors_are_more_fun on Unsplash (https://unsplash.com/photos/Wb4vcBqyGT8). Unsplash License. Graded to the site navy duotone.
+
+Industries page photos (illustrative, not Vedanova facilities), all from Unsplash under the Unsplash License, graded to the site navy duotone: printing.jpg (https://unsplash.com/photos/printing-machine-Tzm3Oyu_6sk), liquid.jpg (Unsplash image photo-1643625626556-5a77cc63549a), gears.jpg (Unsplash image photo-1524514587686-e2909d726e9b), factory.jpg (Unsplash image photo-1647427060118-4911c9821b82). Photographer names were not recorded when downloaded; confirm them before launch.
