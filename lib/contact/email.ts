@@ -1,15 +1,15 @@
 import type { Enquiry } from './validate';
 
 /**
- * Public absolute logo URL for email clients.
- * Supports override via NEXT_PUBLIC_SITE_URL or VEDANOVA_LOGO_URL if configured,
- * defaulting to the live production asset URL.
+ * Public absolute transparent logo URL for email clients.
+ * Designed to blend directly onto dark navy headers with no white patch/box.
+ * Supports override via VEDANOVA_LOGO_URL or NEXT_PUBLIC_SITE_URL if configured.
  */
 export const VEDANOVA_LOGO_URL =
   process.env.VEDANOVA_LOGO_URL ||
   (process.env.NEXT_PUBLIC_SITE_URL
-    ? `${process.env.NEXT_PUBLIC_SITE_URL.replace(/\/+$/, '')}/images/vedanova-logo.png`
-    : 'https://vedanova-chemicals.vercel.app/images/vedanova-logo.png');
+    ? `${process.env.NEXT_PUBLIC_SITE_URL.replace(/\/+$/, '')}/images/vedanova-logo-transparent.png`
+    : 'https://vedanova-chemicals.vercel.app/images/vedanova-logo-transparent.png');
 
 /** Escapes text for safe inclusion in HTML. Every customer-supplied value goes through this. */
 export function escapeHtml(input: string): string {
@@ -86,28 +86,21 @@ export function enquiryHtml(
         <!-- Inner Card -->
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:620px;background-color:#ffffff;border-radius:8px;overflow:hidden;box-shadow:0 4px 18px rgba(10,16,48,0.06);border:1px solid #e4e1d8;">
           
-          <!-- Header: Dark Navy with Orange Accent Line -->
+          <!-- Header: Dark Navy with Transparent Logo (No White Box) & Orange Accent Border -->
           <tr>
             <td style="background-color:#0a1030;padding:26px 30px;border-bottom:3px solid #e94826;">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
                   <td align="left" valign="middle">
-                    <!-- Brand Plate for logo clarity -->
-                    <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="background-color:#ffffff;border-radius:4px;padding:6px 12px;display:inline-block;">
-                      <tr>
-                        <td align="center" valign="middle">
-                          <img
-                            src="${escapeHtml(logoUrl)}"
-                            alt="Vedanova Chemicals"
-                            width="180"
-                            style="display:block;width:180px;max-width:180px;height:auto;border:0;outline:none;text-decoration:none;"
-                          />
-                        </td>
-                      </tr>
-                    </table>
+                    <img
+                      src="${escapeHtml(logoUrl)}"
+                      alt="Vedanova Chemicals"
+                      width="196"
+                      style="display:block;width:196px;max-width:196px;height:auto;border:0;outline:none;text-decoration:none;background:transparent;"
+                    />
                   </td>
                   <td align="right" valign="middle" style="padding-left:16px;">
-                    <span style="display:inline-block;padding:4px 10px;background-color:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.16);border-radius:4px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#ff8a63;font-weight:600;">
+                    <span style="display:inline-block;padding:5px 12px;background-color:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);border-radius:4px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#ff8a63;font-weight:600;">
                       New Enquiry
                     </span>
                   </td>
