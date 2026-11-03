@@ -2,8 +2,9 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowUpRight } from 'lucide-react';
-import { ImageReveal, MaskedHeading, MotionProvider, Parallax, Reveal, RevealGroup } from '@/components/motion';
+import { MaskedHeading, MotionProvider, Parallax, Reveal, RevealGroup } from '@/components/motion';
 import ApproachSteps from '@/components/about/ApproachSteps';
+import WhoScene from '@/components/about/WhoScene';
 import EnquiryBand from '@/components/home/EnquiryBand';
 import Ticks from '@/components/home/Ticks';
 import { photo } from '@/lib/photos';
@@ -48,23 +49,8 @@ export default function AboutPage() {
       </section>
 
       {/* 02 — Who we are */}
-      <section id="who" className="a-section" aria-labelledby="who-title">
-        <div className="container a-split">
-          <RevealGroup className="a-split-copy" stagger={0.1}>
-            <Reveal><p className="a-label">01 / Who we are</p></Reveal>
-            <MaskedHeading as="h2" className="a-h2" lines={[<span id="who-title" key="a">One Focus.</span>, <span key="b" className="a-soft">Better Business Connections.</span>]} />
-            <Reveal as="p" className="a-body">Based in Vadodara, Gujarat, Vedanova Chemicals Private Limited is engaged in trading and sourcing industrial solvents, recovered solvents, and petrochemical products.</Reveal>
-            <Reveal as="p" className="a-body">Our approach begins with understanding each enquiry, including the required material, relevant specifications, quantity, and intended application.</Reveal>
-          </RevealGroup>
-          <figure className="a-split-media">
-            <ImageReveal className="a-frame">
-              <Image {...photo('drums')} alt="Stacked steel drums (illustrative photograph)" fill sizes="(min-width: 1024px) 46vw, 100vw" />
-              <Ticks />
-            </ImageReveal>
-            <figcaption className="a-caption">Illustrative industrial photography</figcaption>
-          </figure>
-        </div>
-      </section>
+      {/* 02 — Who we are: pinned photo expansion on desktop, stacked elsewhere */}
+      <WhoScene />
 
       {/* 03 — What we do */}
       <section className="a-section a-tint" aria-labelledby="do-title">

@@ -11,3 +11,5 @@ scripts/grade-photos.cjs. The project holds no record of the source photographer
 TODO before launch: confirm the source and licence of each file and list the credits here, or replace the set with
 the client's own photography (re-run the script on the new raw files to keep the same grade).
 All Home photography is illustrative and is captioned as such on the page.
+
+Who we are photo (about page): "Industrial refinery with storage tanks and metal pipes under a warm golden sky" by @mirrors_are_more_fun on Unsplash (https://unsplash.com/photos/Wb4vcBqyGT8). Unsplash License. Graded to the site navy duotone.
