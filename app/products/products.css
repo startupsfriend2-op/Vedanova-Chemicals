@@ -116,7 +116,9 @@
 /* responsive */
 @media(max-width:1023px){
   .p-intro-copy,.p-intro-side{grid-column:1/-1}
-  .p-item{grid-template-columns:1fr;row-gap:36px;min-height:0;padding-block:clamp(56px,9vw,80px)}
+  .p-item{grid-template-columns:minmax(0,1fr);row-gap:36px;min-height:0;padding-block:clamp(56px,9vw,80px)}
+  .p-copy{min-width:0}
+  .p-enquire{white-space:normal;text-align:left;height:auto;padding-block:14px}
   .p-media,.p-copy{grid-column:1/-1 !important}
   .p-media{order:-1}
   .p-frame{aspect-ratio:4/3}

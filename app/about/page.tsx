@@ -1,25 +1,18 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowUpRight } from 'lucide-react';
 import { MaskedHeading, MotionProvider, Parallax, Reveal, RevealGroup } from '@/components/motion';
 import ApproachSteps from '@/components/about/ApproachSteps';
 import WhoScene from '@/components/about/WhoScene';
+import ServiceRows from '@/components/about/ServiceRows';
 import EnquiryBand from '@/components/home/EnquiryBand';
-import Ticks from '@/components/home/Ticks';
 import { photo } from '@/lib/photos';
 import './about.css';
 
 export const metadata: Metadata = {
   title: 'About Us',
+  alternates: { canonical: '/about' },
   description: 'Learn about Vedanova Chemicals Private Limited, a Vadodara-based trading and sourcing company focused on industrial solvents, recovered solvents and petrochemical products.',
 };
-
-const offerings = [
-  { no: '01', title: 'Industrial Solvents', text: 'Trading and sourcing enquiries for industrial solvent requirements.', href: '/products#industrial-solvents', name: 'solvents' as const, alt: 'Stainless steel storage silos (illustrative photograph)' },
-  { no: '02', title: 'Recovered Solvents', text: 'Enquiries for recovered solvents suited to relevant industrial applications.', href: '/products#recovered-solvents', name: 'recovered' as const, alt: 'Distillation column and process structure (illustrative photograph)' },
-  { no: '03', title: 'Petrochemicals', text: 'Trading and sourcing discussions covering petrochemical product requirements.', href: '/products#petrochemicals', name: 'petrochemicals' as const, alt: 'Refinery towers and steam on a plant skyline (illustrative photograph)' },
-];
 
 const steps = [
   { no: '01', title: 'Understand the Requirement', text: 'Begin with the product type, specifications, quantity, and intended application.' },
@@ -52,33 +45,8 @@ export default function AboutPage() {
       {/* 02 — Who we are: pinned photo expansion on desktop, stacked elsewhere */}
       <WhoScene />
 
-      {/* 03 — What we do */}
-      <section className="a-section a-tint" aria-labelledby="do-title">
-        <div className="container">
-          <RevealGroup className="a-head">
-            <Reveal><p className="a-label">02 / What we do</p></Reveal>
-            <Reveal as="h2"><span id="do-title" className="a-h2">Focused on What Industry Needs.</span></Reveal>
-          </RevealGroup>
-          <RevealGroup as="ul" className="a-cards" stagger={0.1}>
-            {offerings.map((o) => (
-              <Reveal as="li" key={o.no} className="a-card-slot">
-                <article className="a-card">
-                  <div className="a-card-media">
-                    <Image {...photo(o.name)} alt={o.alt} fill sizes="(min-width: 1024px) 30vw, (min-width: 700px) 50vw, 100vw" />
-                    <Ticks />
-                  </div>
-                  <div className="a-card-body">
-                    <span className="a-card-no">{o.no}</span>
-                    <h3>{o.title}</h3>
-                    <p>{o.text}</p>
-                    <Link href={o.href} className="a-card-link">Explore {o.title} <ArrowUpRight className="a-arrow" size={18} aria-hidden="true" /></Link>
-                  </div>
-                </article>
-              </Reveal>
-            ))}
-          </RevealGroup>
-        </div>
-      </section>
+      {/* 03 — What we do: alternating rows with scroll-linked photos */}
+      <ServiceRows />
 
       {/* 04 — Working approach */}
       <section className="a-section a-approach" aria-labelledby="approach-title">

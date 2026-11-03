@@ -68,3 +68,6 @@
 @media(pointer:coarse),(max-width:1023px){.f-link{min-height:44px}.topbar a{min-height:44px}}
 @media(pointer:coarse){:root{--topbar-h:44px}}
 @media(max-width:1023px){:root{--topbar-h:44px}}
+
+/* touch: larger tap area for text links inside page content (padding on inline links does not move the text) */
+@media(pointer:coarse){main p a,main li a{padding-block:12px}}

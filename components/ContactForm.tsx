@@ -24,28 +24,28 @@ export default function ContactForm() {
  return <form className="c-form" onSubmit={handleSubmit} id="enquiry" noValidate={false}>
    <div className="c-form-intro">
      <p className="c-label"><span className="c-label-rule" aria-hidden="true" />Product enquiry</p>
-     <h2 className="c-form-title">Tell us what you need.</h2>
+     <h2 className="c-form-title">Send Us a Message</h2>
      <p className="c-form-lead">Share your chemical requirements and contact information for a sourcing discussion.</p>
    </div>
    <div className="c-grid">
      <label className="c-field">
-       <span className="c-field-label">Full name <span className="c-req" aria-hidden="true">*</span></span>
-       <input className="c-input" name="name" type="text" minLength={2} maxLength={120} autoComplete="name" placeholder="Your full name" required/>
+       <span className="c-field-label c-sr">Full name <span className="c-req" aria-hidden="true">*</span></span>
+       <input className="c-input" name="name" type="text" minLength={2} maxLength={120} autoComplete="name" placeholder="Your Name *" required/>
      </label>
      <label className="c-field">
-       <span className="c-field-label">Company name <span className="c-opt">(optional)</span></span>
-       <input className="c-input" name="company" type="text" maxLength={150} autoComplete="organization" placeholder="Your company"/>
+       <span className="c-field-label c-sr">Company name <span className="c-opt">(optional)</span></span>
+       <input className="c-input" name="company" type="text" maxLength={150} autoComplete="organization" placeholder="Company (optional)"/>
      </label>
      <label className="c-field">
-       <span className="c-field-label">Email address <span className="c-req" aria-hidden="true">*</span></span>
-       <input className="c-input" name="email" type="email" maxLength={254} autoComplete="email" placeholder="name@company.com" required/>
+       <span className="c-field-label c-sr">Email address <span className="c-req" aria-hidden="true">*</span></span>
+       <input className="c-input" name="email" type="email" maxLength={254} autoComplete="email" placeholder="Email Address *" required/>
      </label>
      <label className="c-field">
-       <span className="c-field-label">Phone number <span className="c-req" aria-hidden="true">*</span></span>
-       <input className="c-input" name="phone" type="tel" maxLength={25} autoComplete="tel" placeholder="+91 XXXXX XXXXX" required/>
+       <span className="c-field-label c-sr">Phone number <span className="c-req" aria-hidden="true">*</span></span>
+       <input className="c-input" name="phone" type="tel" maxLength={25} autoComplete="tel" placeholder="Phone Number *" required/>
      </label>
      <label className="c-field">
-       <span className="c-field-label">Product category <span className="c-req" aria-hidden="true">*</span></span>
+       <span className="c-field-label c-sr">Product category <span className="c-req" aria-hidden="true">*</span></span>
        <select className="c-input c-select" name="product" value={product} onChange={e=>setProduct(e.target.value)} required>
          <option value="" disabled>Select a category</option>
          <option>Industrial Solvents</option>
@@ -55,12 +55,12 @@ export default function ContactForm() {
        </select>
      </label>
      <label className="c-field">
-       <span className="c-field-label">Required quantity <span className="c-opt">(optional)</span></span>
-       <input className="c-input" name="quantity" type="text" maxLength={100} placeholder="e.g. 5 MT, 20 drums"/>
+       <span className="c-field-label c-sr">Required quantity <span className="c-opt">(optional)</span></span>
+       <input className="c-input" name="quantity" type="text" maxLength={100} placeholder="Required Quantity (optional)"/>
      </label>
      <label className="c-field c-field-wide">
-       <span className="c-field-label">Requirement details <span className="c-req" aria-hidden="true">*</span></span>
-       <textarea className="c-input c-textarea" name="message" rows={5} minLength={10} maxLength={4000} required placeholder="Chemical name, grade or specification, delivery location and any other details."/>
+       <span className="c-field-label c-sr">Requirement details <span className="c-req" aria-hidden="true">*</span></span>
+       <textarea className="c-input c-textarea" name="message" rows={5} minLength={10} maxLength={4000} required placeholder="Your Message *"/>
      </label>
    </div>
    <div className="honeypot" aria-hidden="true"><label>Leave this field empty<input name="website" type="text" tabIndex={-1} autoComplete="off"/></label></div>

@@ -6,4 +6,5 @@ export { default as ImageReveal } from './ImageReveal';
 export { default as Parallax } from './Parallax';
 export { default as DrawLine } from './DrawLine';
 export { default as SmoothScroll, scrollToY } from './SmoothScroll';
+export { default as ScrollReveal } from './ScrollReveal';
 export * from './variants';

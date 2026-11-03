@@ -11,6 +11,7 @@ import './industries.css';
 
 export const metadata: Metadata = {
   title: 'Industrial Applications',
+  alternates: { canonical: '/industries' },
   description: 'Explore industrial applications relevant to solvent and petrochemical requirements, including coatings, inks and chemical processing.',
 };
 

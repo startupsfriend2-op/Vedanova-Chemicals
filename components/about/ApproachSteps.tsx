@@ -2,7 +2,7 @@
 
 import { useRef } from 'react';
 import { m, useScroll, useTransform } from 'motion/react';
-import { Reveal } from '@/components/motion';
+import { ScrollReveal } from '@/components/motion';
 
 type Step = { no: string; title: string; text: string };
 
@@ -18,14 +18,14 @@ export default function ApproachSteps({ steps }: { steps: Step[] }) {
         <m.span className="a-steps-fill" style={{ scaleY: fill }} />
       </span>
       <ol ref={ref} className="a-steps-list">
-        {steps.map((s, i) => (
-          <Reveal as="li" key={s.no} className="a-step" delay={i * 0.1}>
+        {steps.map((s) => (
+          <ScrollReveal as="li" key={s.no} className="a-step">
             <span className="a-step-no">{s.no}</span>
             <div>
               <h3>{s.title}</h3>
               <p>{s.text}</p>
             </div>
-          </Reveal>
+          </ScrollReveal>
         ))}
       </ol>
     </div>

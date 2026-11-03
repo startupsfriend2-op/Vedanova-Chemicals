@@ -1,60 +1,30 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
-import { ArrowUpRight, Building2, Mail, MapPin, Phone } from 'lucide-react';
-import { MaskedHeading, MotionProvider, Parallax, Reveal, RevealGroup } from '@/components/motion';
+import { ArrowUpRight, Building2, Clock, Mail, MapPin, Phone } from 'lucide-react';
+import { MotionProvider, Reveal, RevealGroup } from '@/components/motion';
 import ContactForm from '@/components/ContactForm';
 import { company } from '@/lib/site';
-import { photo } from '@/lib/photos';
 import './contact.css';
 
 export const metadata: Metadata = {
   title: 'Contact Us & Request a Quote',
+  alternates: { canonical: '/contact' },
   description: 'Contact Vedanova Chemicals in Vadodara to discuss industrial solvent, recovered solvent and petrochemical sourcing requirements.',
 };
 
-// Organization details from the supplied company information only.
-const structuredData = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: company.brand,
-  legalName: company.legalName,
-  url: 'https://vedanova-chemicals.vercel.app/contact',
-  telephone: company.phone,
-  email: company.email,
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: 'B 801, Iscon Heights, Gotri Road',
-    addressLocality: 'Vadodara',
-    addressRegion: 'Gujarat',
-    postalCode: '390021',
-    addressCountry: 'IN',
-  },
-};
+// Business hours are not confirmed yet. Set this to the verified hours (for example "Mon – Sat : 9:30 AM – 6:30 PM")
+// and the hours appear in the contact details. While it is null, nothing is shown.
+const businessHours: string | null = null;
 
 export default function ContactPage() {
   return (
     <MotionProvider>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, '\\u003c') }} />
 
-      {/* 01 — Hero */}
-      <section className="c-hero on-dark" aria-labelledby="contact-title">
-        <Parallax className="c-hero-img" distance={24} introScale={1.04}>
-          <Image {...photo('tank')} alt="Stainless steel process tank (illustrative photograph)" fill priority sizes="100vw" />
-        </Parallax>
-        <div className="c-hero-shade" aria-hidden="true" />
-        <RevealGroup immediate delay={0.12} className="container c-hero-inner">
-          <Reveal><p className="c-hero-eyebrow">Get in touch</p></Reveal>
-          <MaskedHeading as="h1" className="c-display" lines={[<span id="contact-title" key="a">Let’s Talk</span>, <span key="b"><em>Chemistry.</em></span>]} />
-          <Reveal as="p" className="c-hero-lead">Tell us about your industrial solvent, recovered solvent or petrochemical requirements. We’re here to start the conversation.</Reveal>
-        </RevealGroup>
-      </section>
-
-      {/* 02 — Contact details and enquiry form */}
+      {/* Contact details and enquiry form */}
       <section id="enquiry-section" className="c-section c-main" aria-label="Contact details and enquiry form">
         <div className="container c-main-grid">
           <RevealGroup className="c-info" stagger={0.08}>
             <Reveal><p className="c-label"><span className="c-label-rule" aria-hidden="true" />Contact information</p></Reveal>
-            <Reveal as="h2" className="c-h2">Let’s build a business connection.</Reveal>
+            <Reveal><h1 className="c-h2">Let’s build a business connection.</h1></Reveal>
             <Reveal as="p" className="c-body">Reach Vedanova Chemicals directly, or send your requirements through the enquiry form.</Reveal>
 
             <ul className="c-methods">
@@ -68,7 +38,7 @@ export default function ContactPage() {
               <Reveal as="li">
                 <a href={`mailto:${company.email}`} className="c-method">
                   <span className="c-method-icon"><Mail size={20} aria-hidden="true" /></span>
-                  <span className="c-method-text"><span className="c-method-label">Email</span><span className="c-method-value">{company.email}</span></span>
+                  <span className="c-method-text"><span className="c-method-label">Email</span><span className="c-method-value">{company.email.replace(/([@.])/g, '$1​')}</span></span>
                   <ArrowUpRight className="c-method-arrow" size={18} aria-hidden="true" />
                 </a>
               </Reveal>
@@ -80,6 +50,14 @@ export default function ContactPage() {
                   <span className="sr-only"> (opens Google Maps in a new tab)</span>
                 </a>
               </Reveal>
+              {businessHours && (
+                <Reveal as="li">
+                  <div className="c-method c-method-static">
+                    <span className="c-method-icon"><Clock size={20} aria-hidden="true" /></span>
+                    <span className="c-method-text"><span className="c-method-label">Business hours</span><span className="c-method-value">{businessHours}</span></span>
+                  </div>
+                </Reveal>
+              )}
               <Reveal as="li">
                 <div className="c-method c-method-static">
                   <span className="c-method-icon"><Building2 size={20} aria-hidden="true" /></span>
@@ -114,7 +92,7 @@ export default function ContactPage() {
               <p className="c-location-company"><strong>{company.legalName}</strong><span>CIN: {company.cin}</span></p>
             </div>
             <div className="c-location-actions">
-              <a href={company.mapsUrl} target="_blank" rel="noopener noreferrer" className="btn btn-dark c-map-btn">
+              <a href={company.mapsUrl} target="_blank" rel="noopener noreferrer" className="btn btn-accent c-map-btn">
                 View on Google Maps <ArrowUpRight className="arrow" size={18} aria-hidden="true" />
               </a>
               <a href={`tel:${company.phone}`} className="c-map-link">Call {company.phoneDisplay}</a>

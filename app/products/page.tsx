@@ -10,6 +10,7 @@ import './products.css';
 
 export const metadata: Metadata = {
   title: 'Products & Solutions',
+  alternates: { canonical: '/products' },
   description: 'Explore solvent trading, recovered solvent sourcing and petrochemical requirements with Vedanova Chemicals.',
 };
 
