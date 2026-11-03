@@ -6,12 +6,14 @@ import { company } from '@/lib/site';
 import { photo } from '@/lib/photos';
 import './EnquiryBand.css';
 
-type Props = { title?: string; text?: string };
+type Props = { title?: string; text?: string; buttonLabel?: string; href?: string };
 
 /** Closing enquiry band. Used on the Home page and on the inner pages. */
 export default function EnquiryBand({
   title = 'Looking for the right chemical supply partner?',
   text = 'Connect with Vedanova Chemicals to discuss your industrial solvent or petrochemical requirements.',
+  buttonLabel = 'Send Your Enquiry',
+  href = '/contact#enquiry',
 }: Props) {
   return (
     <MotionProvider>
@@ -25,7 +27,7 @@ export default function EnquiryBand({
             <Reveal as="p">{text}</Reveal>
           </RevealGroup>
           <Reveal className="h-cta-actions" delay={0.3}>
-            <Link href="/contact#enquiry" className="btn btn-accent">Send Your Enquiry <ArrowUpRight className="arrow" size={18} aria-hidden="true" /></Link>
+            <Link href={href} className="btn btn-accent">{buttonLabel} <ArrowUpRight className="arrow" size={18} aria-hidden="true" /></Link>
             <a className="h-cta-link" href={`tel:${company.phone}`}><Phone size={16} aria-hidden="true" />{company.phoneDisplay}</a>
             <a className="h-cta-link" href={`mailto:${company.email}`}><Mail size={16} aria-hidden="true" />{company.email}</a>
           </Reveal>
