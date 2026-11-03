@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { ImageReveal, MaskedHeading, MotionProvider, Parallax, Reveal, RevealGroup } from '@/components/motion';
 import ApproachSteps from '@/components/about/ApproachSteps';
+import EnquiryBand from '@/components/home/EnquiryBand';
 import Ticks from '@/components/home/Ticks';
 import { photo } from '@/lib/photos';
 import './about.css';
@@ -104,19 +105,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 05 — Closing call to action */}
-      <section className="a-cta on-dark" aria-labelledby="cta-title">
-        <div className="container a-cta-inner">
-          <RevealGroup stagger={0.1}>
-            <Reveal><p className="a-label">Let’s work together</p></Reveal>
-            <Reveal as="h2"><span id="cta-title" className="a-h2 a-h2-xl">Let’s Discuss Your Next Requirement.</span></Reveal>
-            <Reveal as="p" className="a-body">Connect with Vedanova Chemicals to discuss your industrial solvent or petrochemical requirements.</Reveal>
-            <Reveal>
-              <Link href="/contact#enquiry" className="btn btn-accent a-cta-btn">Request a Quote <ArrowRight className="arrow-r" size={18} aria-hidden="true" /></Link>
-            </Reveal>
-          </RevealGroup>
-        </div>
-      </section>
+      {/* 05 — Closing enquiry band (shared with the other pages) */}
+      <EnquiryBand />
     </MotionProvider>
   );
 }
